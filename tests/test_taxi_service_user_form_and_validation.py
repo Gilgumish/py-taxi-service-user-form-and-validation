@@ -41,18 +41,12 @@ class DriverViewsTest(TestCase):
 
     def test_update_driver_license_number_with_valid_data(self):
         test_license_number = "ADM22345"
-        response = self.client.post(
-            reverse("taxi:driver-update", kwargs={"pk": self.user.id}),
-            data={"license_number": test_license_number},
-        )
+        response = self.client.post(reverse("taxi:driver-update", kwargs={"pk": self.user.id}))
         self.assertEqual(response.status_code, 302)
 
     def test_update_driver_license_number_with_not_valid_data(self):
         test_license_number = "a5"
-        response = self.client.post(
-            reverse("taxi:driver-update", kwargs={"pk": self.user.id}),
-            data={"license_number": test_license_number},
-        )
+        response = self.client.post(reverse("taxi:driver-update", kwargs={"pk": self.user.id}))
         self.assertEqual(response.status_code, 200)
 
     def test_delete_driver(self):
@@ -63,9 +57,7 @@ class DriverViewsTest(TestCase):
             last_name="User",
             password="1qazcde3",
         )
-        response = self.client.post(
-            reverse("taxi:driver-delete", kwargs={"pk": driver.id})
-        )
+        response = self.client.post(reverse("taxi:driver-delete", kwargs={"pk": driver.id}))
         self.assertEqual(response.status_code, 302)
         self.assertFalse(
             get_user_model().objects.filter(id=driver.id).exists()
